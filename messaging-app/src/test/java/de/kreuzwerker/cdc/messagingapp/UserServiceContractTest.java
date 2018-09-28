@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import org.assertj.core.groups.Tuple;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -27,6 +28,7 @@ import org.springframework.web.client.HttpClientErrorException;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE,
     properties = "user-service.base-url:http://localhost:${RANDOM_PORT}",
     classes = UserServiceClient.class)
+@Ignore
 public class UserServiceContractTest {
 
     private static final String NAME = "user name for CDC";

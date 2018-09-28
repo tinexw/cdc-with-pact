@@ -1,7 +1,7 @@
 # Infrastructure
 
 This folder contains everything to set up a pact broker (with postgres) and
-a Jenkins with all consumer and provider jobs.
+a Jenkins with all consumer and provider jobs. The jobs are created with the [Job DSL plugin](https://jenkinsci.github.io/job-dsl-plugin/)
 
 Prerequisites:
 - docker-compose

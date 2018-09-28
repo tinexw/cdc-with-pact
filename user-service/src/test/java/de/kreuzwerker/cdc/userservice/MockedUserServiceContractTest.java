@@ -12,6 +12,7 @@ import au.com.dius.pact.provider.spring.SpringRestPactRunner;
 import au.com.dius.pact.provider.spring.target.SpringBootHttpTarget;
 import java.util.Date;
 import java.util.UUID;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 @Provider("user-service")
 @PactFolder("pacts")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Ignore
 public class MockedUserServiceContractTest {
 
     @TestTarget

@@ -11,13 +11,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.4.RELEASE</version>
+    <version>2.0.5.RELEASE</version>
   </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <pact.version>3.5.23</pact.version>
   </properties>
 
 
@@ -41,12 +42,28 @@
     <dependency>
       <groupId>au.com.dius</groupId>
       <artifactId>pact-jvm-consumer-java8_2.12</artifactId>
-      <version>3.5.22</version>
+      <version>${pact.version}</version>
       <scope>test</scope>
     </dependency>
-
-
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>au.com.dius</groupId>
+        <artifactId>pact-jvm-provider-maven_2.12</artifactId>
+        <version>${pact.version}</version>
+        <configuration>
+          <!-- broker_app is the service name in docker-compose -->
+          <pactBrokerUrl>http://broker_app</pactBrokerUrl>
+          <projectVersion>${pact.project.version}</projectVersion>
+          <tags>
+            <tag>${pact.tag}</tag>
+          </tags>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 
 </project>
