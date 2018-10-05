@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.UUID;
 import org.assertj.core.groups.Tuple;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -52,6 +53,7 @@ public class UserServiceGenericStateWithParameterContractTest {
 
         // See https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit#dsl-matching-methods
         DslPart body = LambdaDsl.newJsonBody((o) -> o
+            .stringType("id", UUID.randomUUID().toString())
             .stringType("name", NAME)
             .timestamp("lastLogin", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 Date.from(LAST_LOGIN.atZone(ZoneId.systemDefault()).toInstant()))
