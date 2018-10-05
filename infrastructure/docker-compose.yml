@@ -23,6 +23,7 @@ services:
       PACT_BROKER_DATABASE_PASSWORD: password
       PACT_BROKER_DATABASE_HOST: postgres
       PACT_BROKER_DATABASE_NAME: postgres
+      PACT_BROKER_WEBHOOK_SCHEME_WHITELIST: http https
   jenkins:
     build:
       context: jenkins
