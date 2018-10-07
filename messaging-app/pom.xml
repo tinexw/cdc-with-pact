@@ -56,7 +56,7 @@
         <configuration>
           <!-- broker_app is the service name in docker-compose -->
           <pactBrokerUrl>http://broker_app</pactBrokerUrl>
-          <projectVersion>${pact.project.version}</projectVersion>
+          <projectVersion>${pact.consumer.version}</projectVersion>
           <tags>
             <tag>${pact.tag}</tag>
           </tags>
