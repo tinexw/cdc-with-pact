@@ -3,7 +3,7 @@ version: '3'
 services:
   # Postgres and pact-broker settings were copied from https://github.com/DiUS/pact_broker-docker/blob/master/docker-compose.yml
   postgres:
-    image: postgres
+    image: postgres:10.5
     healthcheck:
       test: psql postgres --command "select 1" -U postgres
     ports:
@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
   broker_app:
-    image: dius/pact-broker
+    image: dius/pact-broker:2.27.2-1
     ports:
       - "80:80"
     links:
