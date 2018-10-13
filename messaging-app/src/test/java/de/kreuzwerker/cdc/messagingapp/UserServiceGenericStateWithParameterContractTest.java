@@ -55,6 +55,7 @@ public class UserServiceGenericStateWithParameterContractTest {
             .stringType("name", NAME)
             .timestamp("lastLogin", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 Date.from(LAST_LOGIN.atZone(ZoneId.systemDefault()).toInstant()))
+            .stringMatcher("role", "ADMIN|USER", "ADMIN")
             .minArrayLike("friends", 0, 2, friend -> friend
                 .stringType("id", "2")
                 .stringType("name", "a friend")
@@ -90,6 +91,7 @@ public class UserServiceGenericStateWithParameterContractTest {
 
         assertThat(user.getName()).isEqualTo(NAME);
         assertThat(user.getLastLogin()).isEqualTo(LAST_LOGIN);
+        assertThat(user.getRole()).isEqualTo("ADMIN");
         assertThat(user.getFriends()).hasSize(2)
             // currently not possible to define multiple values, s. https://github.com/DiUS/pact-jvm/issues/379
             .extracting(Friend::getId, Friend::getName)
