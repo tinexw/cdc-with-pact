@@ -1,0 +1,20 @@
+{
+  "consumer": {
+    "name": "messaging-app"
+  },
+  "provider": {
+    "name": "user-service"
+  },
+  "request": {
+    "method": "POST",
+    "url": "http://jenkins:8080/job/user-service-run-contract-tests/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
+    "headers": {
+      "Accept": "application/json"
+    }
+  },
+  "events": [
+    {
+      "name": "contract_content_changed"
+    }
+  ]
+}
