@@ -32,7 +32,7 @@ import org.springframework.web.client.HttpClientErrorException;
 public class UserServiceContractTest {
 
     private static final String NAME = "user name for CDC";
-    private static final LocalDateTime LAST_LOGIN = LocalDateTime.now();
+    private static final LocalDateTime LAST_LOGIN = LocalDateTime.of(2018, 10, 16, 12, 34, 12);
 
     @ClassRule
     public static RandomPortRule randomPort = new RandomPortRule();
