@@ -1,0 +1,24 @@
+#!groovy
+pipeline {
+
+  agent any
+
+  parameters {
+    string(name: 'pactConsumerTags', defaultValue: 'master', description: 'Tags to verify')
+  }
+
+  stages {
+    stage ('Run Contract Tests') {
+      steps {
+        dir('user-service') {
+          sh "../mvnw clean test " +
+                  "-Pcontract-tests" +
+                  "-Dpact.provider.version=${GIT_COMMIT} " +
+                  "-Dpact.verifier.publishResults=true " +
+                  "-Dpactbroker.tags=${params.pactConsumerTags}"
+        }
+      }
+    }
+  }
+
+}

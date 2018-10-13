@@ -1,19 +1,38 @@
+def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
+
 ['messaging-app', 'user-service'].each {
-    def jobName = it
-    pipelineJob(jobName) {
+    def app = it
+    pipelineJob("$app-build-and-deploy") {
         definition {
             cpsScm {
                 scm {
                     git {
                         remote {
-                            url('https://github.com/tinexw/cdc-with-pact')
+                            url(gitUrl)
                         }
                         branch('master')
                         extensions {}
                     }
                 }
-                scriptPath("$jobName/Jenkinsfile")
+                scriptPath("$app/jenkins/cd/Jenkinsfile")
             }
+        }
+    }
+}
+
+pipelineJob("user-service-run-contract-tests") {
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url(gitUrl)
+                    }
+                    branch('master')
+                    extensions {}
+                }
+            }
+            scriptPath("user-service/jenkins/cd/Jenkinsfile-contract-tests")
         }
     }
 }
