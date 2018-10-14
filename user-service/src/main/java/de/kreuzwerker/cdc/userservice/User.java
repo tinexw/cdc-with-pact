@@ -13,6 +13,7 @@ public class User {
     private String id;
     private String legacyId;
     private String name;
+    private String nickname;
     private UserRole role;
     private Date lastLogin;
     @Singular
