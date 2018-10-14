@@ -54,6 +54,7 @@ public class UserServiceGenericStateWithParameterContractTest {
         DslPart body = LambdaDsl.newJsonBody((o) -> o
             .stringType("id", "1")
             .stringType("name", NAME)
+            .stringType("nickname", NAME)
             .timestamp("lastLogin", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 Date.from(LAST_LOGIN.atZone(ZoneId.systemDefault()).toInstant()))
             .stringMatcher("role", "ADMIN|USER", "ADMIN")
