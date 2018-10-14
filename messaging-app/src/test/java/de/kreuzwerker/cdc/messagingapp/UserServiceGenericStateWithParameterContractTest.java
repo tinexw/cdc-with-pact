@@ -53,6 +53,7 @@ public class UserServiceGenericStateWithParameterContractTest {
         // See https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit#dsl-matching-methods
         DslPart body = LambdaDsl.newJsonBody((o) -> o
             .stringType("name", NAME)
+            .stringType("nickname", NAME)
             .timestamp("lastLogin", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 Date.from(LAST_LOGIN.atZone(ZoneId.systemDefault()).toInstant()))
             .stringMatcher("role", "ADMIN|USER", "ADMIN")
