@@ -21,6 +21,30 @@ def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
     }
 }
 
+// Separate build and deploy jobs for consumer and provider each (non-continuous deployment case)
+['messaging-app', 'user-service'].each {
+    def app = it
+    ['build', 'deploy'].each {
+        def phase = it
+        pipelineJob("$app-$phase") {
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote {
+                                url(gitUrl)
+                            }
+                            branch('master')
+                            extensions {}
+                        }
+                    }
+                    scriptPath("$app/jenkins/without-cd/Jenkinsfile-$phase")
+                }
+            }
+        }
+    }
+}
+
 // Branch job for consumer
 pipelineJob("messaging-app-branch-with-removed-field") {
     definition {
@@ -51,7 +75,7 @@ pipelineJob("user-service-run-contract-tests") {
                     extensions {}
                 }
             }
-            scriptPath("user-service/jenkins/cd/Jenkinsfile-contract-tests")
+            scriptPath("user-service/jenkins/Jenkinsfile-contract-tests")
         }
     }
 }
