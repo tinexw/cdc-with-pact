@@ -54,8 +54,8 @@
         <artifactId>pact-jvm-provider-maven_2.12</artifactId>
         <version>${pact.version}</version>
         <configuration>
-          <!-- broker_app is the service name in docker-compose -->
-          <pactBrokerUrl>http://broker_app</pactBrokerUrl>
+          <!-- pact_broker is the service name in docker-compose -->
+          <pactBrokerUrl>http://pact_broker</pactBrokerUrl>
           <projectVersion>${pact.consumer.version}</projectVersion>
           <tags>
             <tag>${pact.tag}</tag>

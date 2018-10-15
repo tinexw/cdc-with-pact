@@ -14,7 +14,7 @@ pipeline {
         sh 'tar xzf pact-1.61.0-linux-x86_64.tar.gz'
         dir('pact/bin') {
           script {
-            env.PROD_VERSION = sh(script: "./pact-broker describe-version -a user-service -b http://broker_app -l prod -o json | jq -r .number", returnStdout: true).trim()
+            env.PROD_VERSION = sh(script: "./pact-broker describe-version -a user-service -b http://pact_broker -l prod -o json | jq -r .number", returnStdout: true).trim()
           }
         }
         echo "Current prod version: " + PROD_VERSION
