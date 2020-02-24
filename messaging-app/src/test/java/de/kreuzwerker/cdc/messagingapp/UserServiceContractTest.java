@@ -1,52 +1,44 @@
 package de.kreuzwerker.cdc.messagingapp;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import au.com.dius.pact.consumer.Pact;
-import au.com.dius.pact.consumer.PactProviderRuleMk2;
-import au.com.dius.pact.consumer.PactVerification;
 import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.model.RequestResponsePact;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.RequestResponsePact;
+import au.com.dius.pact.core.model.annotations.Pact;
 import io.pactfoundation.consumer.dsl.LambdaDsl;
+import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import org.assertj.core.groups.Tuple;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.HttpClientErrorException;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE,
-    properties = "user-service.base-url:http://localhost:${RANDOM_PORT}",
+        properties = "user-service.base-url:http://localhost:8080",
     classes = UserServiceClient.class)
-@Ignore
+@Disabled
+@ExtendWith(PactConsumerTestExt.class)
+@PactTestFor(providerName = "user-service", port = "8080")
 public class UserServiceContractTest {
 
     private static final String NAME = "user name for CDC";
     private static final LocalDateTime LAST_LOGIN = LocalDateTime.of(2018, 10, 16, 12, 34, 12);
 
-    @ClassRule
-    public static RandomPortRule randomPort = new RandomPortRule();
-
-    @Rule
-    public PactProviderRuleMk2 provider = new PactProviderRuleMk2("user-service", null,
-        randomPort.getPort(), this);
-
-    @Rule
-    public ExpectedException expandException = ExpectedException.none();
-
     @Autowired
     private UserServiceClient userServiceClient;
-
 
     @Pact(consumer = "messaging-app")
     public RequestResponsePact pactUserExists(PactDslWithProvider builder) {
@@ -87,7 +79,7 @@ public class UserServiceContractTest {
             .toPact();
     }
 
-    @PactVerification(fragment = "pactUserExists")
+    @PactTestFor(pactMethod = "pactUserExists")
     @Test
     public void userExists() {
         final User user = userServiceClient.getUser("1");
@@ -101,12 +93,11 @@ public class UserServiceContractTest {
             .containsExactly(Tuple.tuple("2", "a friend"), Tuple.tuple("2", "a friend"));
     }
 
-    @PactVerification(fragment = "pactUserDoesNotExist")
+    @PactTestFor(pactMethod = "pactUserDoesNotExist")
     @Test
     public void userDoesNotExist() {
-        expandException.expect(HttpClientErrorException.class);
-        expandException.expectMessage("404 Not Found");
-
-        userServiceClient.getUser("2");
+        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () ->
+                userServiceClient.getUser("2"));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
 }

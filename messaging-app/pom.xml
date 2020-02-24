@@ -11,14 +11,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.0.RELEASE</version>
+    <version>2.2.4.RELEASE</version>
   </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <pact.version>3.5.24</pact.version>
+    <pact.version>4.0.6</pact.version>
   </properties>
 
 
@@ -37,11 +37,30 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit-jupiter.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>au.com.dius</groupId>
-      <artifactId>pact-jvm-consumer-java8_2.12</artifactId>
+      <artifactId>pact-jvm-consumer-java8</artifactId>
+      <version>${pact.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>au.com.dius</groupId>
+      <artifactId>pact-jvm-consumer-junit5</artifactId>
       <version>${pact.version}</version>
       <scope>test</scope>
     </dependency>
@@ -51,7 +70,7 @@
     <plugins>
       <plugin>
         <groupId>au.com.dius</groupId>
-        <artifactId>pact-jvm-provider-maven_2.12</artifactId>
+        <artifactId>pact-jvm-provider-maven</artifactId>
         <version>${pact.version}</version>
         <configuration>
           <!-- pact_broker is the service name in docker-compose -->
