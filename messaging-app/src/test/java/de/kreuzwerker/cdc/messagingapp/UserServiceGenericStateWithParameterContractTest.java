@@ -41,7 +41,7 @@ public class UserServiceGenericStateWithParameterContractTest {
         randomPort.getPort(), this);
 
     @Rule
-    public ExpectedException expandException = ExpectedException.none();
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Autowired
     private UserServiceClient userServiceClient;
@@ -102,8 +102,8 @@ public class UserServiceGenericStateWithParameterContractTest {
     @PactVerification(fragment = "pactUserDoesNotExist")
     @Test
     public void userDoesNotExist() {
-        expandException.expect(HttpClientErrorException.class);
-        expandException.expectMessage("404 Not Found");
+        expectedException.expect(HttpClientErrorException.class);
+        expectedException.expectMessage("404 Not Found");
 
         userServiceClient.getUser("1");
     }
