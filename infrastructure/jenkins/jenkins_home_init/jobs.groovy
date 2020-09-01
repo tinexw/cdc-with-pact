@@ -11,7 +11,7 @@ def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
                         remote {
                             url(gitUrl)
                         }
-                        branch('master')
+                        branch('junit5')
                         extensions {}
                     }
                 }
@@ -34,7 +34,7 @@ def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
                             remote {
                                 url(gitUrl)
                             }
-                            branch('master')
+                            branch('junit5')
                             extensions {}
                         }
                     }
@@ -71,7 +71,7 @@ pipelineJob("user-service-run-contract-tests") {
                     remote {
                         url(gitUrl)
                     }
-                    branch('master')
+                    branch('junit5')
                     extensions {}
                 }
             }
