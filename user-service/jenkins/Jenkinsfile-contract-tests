@@ -4,7 +4,7 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'pactConsumerTags', defaultValue: 'master', description: 'Tags to verify')
+    string(name: 'pactConsumerTags', defaultValue: 'junit5', description: 'Tags to verify')
   }
 
   stages {
