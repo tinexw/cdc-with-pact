@@ -33,7 +33,7 @@ pipeline {
     }
     stage('Deploy') {
       when {
-        branch 'master'
+        branch 'junit5'
       }
       steps {
         echo 'Deploying to prod now...'
