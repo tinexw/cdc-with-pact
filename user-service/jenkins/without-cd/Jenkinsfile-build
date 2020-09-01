@@ -7,7 +7,9 @@ pipeline {
     stage('Build') {
       steps {
         dir('user-service') {
-           sh '../mvnw clean verify'
+          sh "../mvnw clean verify " +
+                  "-Dpact.provider.version=${GIT_COMMIT} " +
+                  "-Dpact.verifier.publishResults=true"
         }
       }
     }
