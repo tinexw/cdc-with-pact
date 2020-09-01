@@ -25,10 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = "user-service.base-url:http://localhost:8080",
+        properties = "user-service.base-url:http://localhost:9000",
     classes = UserServiceClient.class)
 @ExtendWith(PactConsumerTestExt.class)
-@PactTestFor(providerName = "user-service", port = "8080")
+@PactTestFor(providerName = "user-service", port = "9000")
 public class UserServiceGenericStateWithParameterContractTest {
 
     private static final String NAME = "user name for CDC";
