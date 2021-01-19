@@ -1,7 +1,7 @@
-FROM jenkins/jenkins:2.138.1
+FROM jenkins/jenkins:2.263.2
 
 # Install required plugins
-RUN /usr/local/bin/install-plugins.sh git:3.9.1 blueocean:1.8.4 job-dsl:1.70 workflow-aggregator:2.6
+RUN /usr/local/bin/install-plugins.sh git:4.5.2 blueocean:1.24.3 job-dsl:1.77
 
 # Skip initial setup
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
